@@ -2,19 +2,41 @@
   "mood": [
     "comfort",
     "spicy",
-    "sweet"
+    "sweet",
+    "light",
+    "crunchy",
+    "warm",
+    "fresh",
+    "cheesy",
+    "fried"
   ],
   "culture": [
     "soul",
     "korean",
-    "italian"
+    "ethiopian",
+    "italian",
+    "caribbean",
+    "japanese",
+    "vietnamese",
+    "indian",
+    "chinese",
+    "mexican",
+    "north-african",
+    "middle-eastern",
+    "american"
   ],
   "diet": [
     "vegan",
-    "halal"
+    "no-dairy",
+    "halal",
+    "gluten-free",
+    "low-carb",
+    "nut-free"
   ],
   "type": [
     "home",
-    "takeout"
+    "takeout",
+    "meal-prep",
+    "microwaveable"
   ]
 }

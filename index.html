@@ -1,1 +1,159 @@
-<!DOCTYPE html><html><head><title>Wuza Rxnd</title></head><body><h1>Placeholder</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wuza Rxnd 🍽️</title>
+  <link rel="icon" href="https://emojiapi.dev/api/v1/bento-box/64.png" type="image/png">
+  <style>
+    :root {
+      --pink: #F26A8D;
+      --gold: #FEC84B;
+      --green: #2B7A78;
+      --black: #1A1A1A;
+      --bg: #fff9f7;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--bg);
+      color: var(--black);
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: var(--pink);
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      color: var(--green);
+    }
+    select, button, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background-color: var(--gold);
+      color: var(--black);
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #ffd466;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff4dd;
+      border: 2px dashed var(--green);
+      border-radius: 10px;
+    }
+    .meal-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+    .meal-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍽️ Wuza Rxnd</h1>
+    <label for="mood">Mood/Craving</label>
+    <select id="mood"></select>
+    <label for="culture">Cuisine</label>
+    <select id="culture"></select>
+    <label for="diet">Dietary Needs</label>
+    <select id="diet"></select>
+    <label for="type">Home or Takeout?</label>
+    <select id="type"></select>
+    <button onclick="getMeal()">🎲 Get Wuza Rxnd</button>
+    <div id="result"></div>
+    <div class="zip-tools">
+      <label for="zipcode">Find Restaurants Near You:</label>
+      <input type="text" id="zipcode" placeholder="Enter ZIP code" />
+      <button onclick="findRestaurants()">📍 Search Nearby</button>
+    </div>
+  </div>
+  <script>
+    let allMeals = [];
+    async function loadDropdowns() {
+      const response = await fetch('wuza_rxnd_dropdown_options.json');
+      const options = await response.json();
+      for (let key in options) {
+        const select = document.getElementById(key);
+        select.innerHTML = '<option value="">-- Choose --</option>';
+        options[key].forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+          select.appendChild(option);
+        });
+      }
+    }
+    async function loadMeals() {
+      const response = await fetch('wuza_rxnd_meals_with_images.json');
+      allMeals = await response.json();
+    }
+    function getMeal() {
+      const mood = document.getElementById('mood').value;
+      const culture = document.getElementById('culture').value;
+      const diet = document.getElementById('diet').value;
+      const type = document.getElementById('type').value;
+      const filtered = allMeals.filter(meal =>
+        (!mood || meal.mood === mood) &&
+        (!culture || meal.culture === culture) &&
+        (!diet || meal.diet === diet) &&
+        (!type || meal.type === type)
+      );
+      const resultDiv = document.getElementById('result');
+      if (filtered.length === 0) {
+        resultDiv.innerHTML = "😔 No meals found. Try changing your filters.";
+        return;
+      }
+      const randomMeal = filtered[Math.floor(Math.random() * filtered.length)];
+      resultDiv.innerHTML = `
+        <div class="meal-title">${randomMeal.title}</div>
+        <p>${randomMeal.description}</p>
+        <img src="${randomMeal.image}" class="meal-img" alt="Meal Image"/>
+      `;
+    }
+    function findRestaurants() {
+      const zip = document.getElementById('zipcode').value.trim();
+      if (zip.length < 5) {
+        alert("Please enter a valid 5-digit ZIP code.");
+        return;
+      }
+      const mapsURL = \`https://www.google.com/maps/search/restaurants+near+\${zip}\`;
+      window.open(mapsURL, "_blank");
+    }
+    window.onload = async () => {
+      await loadDropdowns();
+      await loadMeals();
+    };
+  </script>
+</body>
+</html>

@@ -1,11 +1,20 @@
 [
   {
-    "title": "Sample Meal",
-    "mood": "comfort",
+    "title": "\ud83c\udf5c Spicy Jollof Ramen Bowl",
+    "mood": "spicy",
     "culture": "soul",
+    "diet": "no-dairy",
+    "type": "home",
+    "description": "A fusion of West African jollof and ramen noodles. Add tofu or chicken for protein.",
+    "image": "https://source.unsplash.com/800x600/?jollof,ramen"
+  },
+  {
+    "title": "\ud83c\udf3f Vegan Kimchi Rice Wraps",
+    "mood": "comfort",
+    "culture": "korean",
     "diet": "vegan",
     "type": "home",
-    "description": "A comforting vegan meal.",
-    "image": "https://source.unsplash.com/800x600/?food"
+    "description": "Warm kimchi, sticky rice, and crisp veggies wrapped in seaweed.",
+    "image": "https://source.unsplash.com/800x600/?kimchi,wraps"
   }
 ]
