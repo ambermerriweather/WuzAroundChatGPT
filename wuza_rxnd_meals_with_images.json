@@ -1,0 +1,11 @@
+[
+  {
+    "title": "Sample Meal",
+    "mood": "comfort",
+    "culture": "soul",
+    "diet": "vegan",
+    "type": "home",
+    "description": "A comforting vegan meal.",
+    "image": "https://source.unsplash.com/800x600/?food"
+  }
+]
